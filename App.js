@@ -1,20 +1,89 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// In App.js in a new project
 
-export default function App() {
+import * as React from 'react';
+import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NativeBaseProvider, extendTheme } from 'native-base';
+import HomeScreen from './screens/home/HomeScreen';
+import KomikDetailScreen from './screens/contents/KomikDetailScreen';
+import komikChapterSceen from './screens/contents/KomikChapterScreen';
+
+const Stack = createNativeStackNavigator();
+
+function App() {
+  const theme = extendTheme({
+    components: {
+      Heading: {
+        baseStyle: (props) => {
+          return {
+            _light: { color: 'black' },
+            _dark: { color: 'white' },
+          };
+        },
+      },
+      HStack: {
+        baseStyle: (props) => {
+          return {
+            _light: { bg: 'white' },
+            _dark: { bg: 'coolGray.800' },
+          };
+        },
+      },
+      VStack: {
+        baseStyle: (props) => {
+          return {
+            _light: { bg: 'white' },
+            _dark: { bg: 'coolGray.800' },
+          };
+        },
+      },
+      ScrollView: {
+        baseStyle: (props) => {
+          return {
+            _light: { bg: 'white' },
+            _dark: { bg: 'coolGray.800' },
+          };
+        },
+      },
+    },
+    config: {
+      initialColorMode: "dark",
+    },
+  });
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NativeBaseProvider theme={theme}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="home"
+            component={HomeScreen}
+            options={{
+              animation: 'slide_from_right',
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            name='komikDetail'
+            component={KomikDetailScreen}
+            options={{
+              animation: 'slide_from_right',
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            name='komikChapter'
+            component={komikChapterSceen}
+            options={{
+              animation: 'slide_from_right',
+              headerShown: false
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </NativeBaseProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
