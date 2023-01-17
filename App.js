@@ -1,13 +1,13 @@
 // In App.js in a new project
 
 import * as React from 'react';
-import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NativeBaseProvider, extendTheme } from 'native-base';
 import HomeScreen from './screens/home/HomeScreen';
 import KomikDetailScreen from './screens/contents/KomikDetailScreen';
 import komikChapterSceen from './screens/contents/KomikChapterScreen';
+import Setting from './screens/setting/Setting';
 
 const Stack = createNativeStackNavigator();
 
@@ -75,6 +75,14 @@ function App() {
           <Stack.Screen
             name='komikChapter'
             component={komikChapterSceen}
+            options={{
+              animation: 'slide_from_right',
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            name='setting'
+            component={Setting}
             options={{
               animation: 'slide_from_right',
               headerShown: false

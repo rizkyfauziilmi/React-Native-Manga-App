@@ -1,6 +1,6 @@
-import { Badge, Heading, HStack, Image, ScrollView, Text, useColorMode, VStack, ChevronDownIcon, ChevronUpIcon, ChevronRightIcon, IconButton, ChevronLeftIcon } from 'native-base'
+import { Badge, Heading, HStack, Image, ScrollView, Text, useColorMode, VStack, IconButton } from 'native-base'
 import React, { useEffect, useState } from 'react'
-import { Button } from 'react-native'
+import { MaterialCommunityIcons, Feather } from '@expo/vector-icons'
 import Loading from '../../components/Loading'
 import TopBar from '../../components/TopBar'
 
@@ -82,7 +82,7 @@ const KomikDetailScreen = ({ route, navigation }) => {
             </HStack> */}
             <HStack paddingX={4} pt={10} pb={5} justifyContent={'space-between'} alignItems={'center'}>
               <Heading size={'sm'}>Episodes - {komikDetail.chapter_list.length}</Heading>
-              <IconButton variant={'solid'} icon={<ChevronDownIcon />} onPress={() => {
+              <IconButton variant={'solid'} colorScheme={'amber'} _icon={{ as: MaterialCommunityIcons, name: "sort-clock-descending-outline" }} onPress={() => {
 
               }} />
             </HStack>
@@ -99,7 +99,7 @@ const KomikDetailScreen = ({ route, navigation }) => {
                         <Text opacity={0.5}>{value.chapter_date}</Text>
                       </VStack>
                     </HStack>
-                    <IconButton icon={<ChevronRightIcon />} onPress={() => {
+                    <IconButton _icon={{ as: Feather, name: "book" }} variant={'outline'} colorScheme={'amber'} onPress={() => {
                       navigation.navigate('komikChapter', {
                         endpoint: value.chapter_endpoint
                       })

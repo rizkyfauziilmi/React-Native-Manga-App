@@ -1,9 +1,10 @@
 import { Heading, ScrollView } from 'native-base'
+import BottomBar from '../../components/BottomBar'
 import TopBar from '../../components/TopBar'
 import TopSectionUi from '../../components/TopSectionUi'
 import TrendSection from '../../components/TrendSection'
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, route }) => {
     return (
         <>
             <TopBar />
@@ -15,6 +16,7 @@ const HomeScreen = ({ navigation }) => {
                 <Heading size={'sm'} paddingX={10} pt={5} textAlign={'center'} noOfLines={2}>What are the TRENDING comics of the moment?</Heading>
                 <TrendSection navigationProps={navigation} />
             </ScrollView>
+            <BottomBar routeProps={route} navigationProps={navigation} />
         </>
     )
 }
