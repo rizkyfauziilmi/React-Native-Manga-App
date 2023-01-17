@@ -8,7 +8,6 @@ const BottomBar = ({ navigationProps, routeProps }) => {
 
     useEffect(() => {
         setRouteName(routeProps.name)
-        console.log(routeName)
     }, [])
 
     return (
