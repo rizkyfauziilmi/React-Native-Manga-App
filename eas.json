@@ -1,7 +1,6 @@
 {
   "cli": {
-    "version": ">= 3.3.2",
-    "appVersionSource": "remote"
+    "version": ">= 3.3.2"
   },
   "build": {
     "development": {
@@ -16,9 +15,7 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {
-      "autoIncrement": true
-    }
+    "production": {}
   },
   "submit": {
     "production": {}
