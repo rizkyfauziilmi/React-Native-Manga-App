@@ -3,12 +3,25 @@ import React, { useEffect, useState } from 'react'
 import { MaterialCommunityIcons, Feather } from '@expo/vector-icons'
 import Loading from '../../components/Loading'
 import TopBar from '../../components/TopBar'
+import { auth, db } from '../../firebase/firebaseConfig'
+import { updateDoc, doc, arrayUnion, serverTimestamp, Timestamp } from 'firebase/firestore'
+import { useDocument } from 'react-firebase-hooks/firestore'
 
 const KomikDetailScreen = ({ route, navigation }) => {
   const { endpoint, title } = route.params
   const [komikDetail, setKomikDetail] = useState(null)
   const { colorMode } = useColorMode()
+  const [value, loading, error] = useDocument(
+    doc(db, 'users', auth.currentUser ? auth.currentUser.email : 'user@example.com'),
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    }
+  )
 
+  let timestamp = new Timestamp.now()
+  const data = value?.data()
+  const chapter = data?.finishedChapter?.map((item) => item.chapterEndpoint)
+  
   useEffect(() => {
     const getKomikDetail = async () => {
       const response = await fetch(`https://komikindo-api.vercel.app/komik-detail/${endpoint}`)
@@ -19,8 +32,8 @@ const KomikDetailScreen = ({ route, navigation }) => {
 
     getKomikDetail()
   }, [])
-
-  if (komikDetail) {
+  
+  if (komikDetail && !loading && value) {
     const pengarang = komikDetail.info.filter(item => {
       return item.hasOwnProperty('Pengarang');
     })
@@ -99,7 +112,12 @@ const KomikDetailScreen = ({ route, navigation }) => {
                         <Text opacity={0.5}>{value.chapter_date}</Text>
                       </VStack>
                     </HStack>
-                    <IconButton _icon={{ as: Feather, name: "book" }} variant={'outline'} colorScheme={'amber'} onPress={() => {
+                    <IconButton _icon={{ as: Feather, name: chapter.includes(value.chapter_endpoint) ? "book-open" : "book" }} variant={chapter.includes(value.chapter_endpoint) ? 'subtle' : 'solid'} colorScheme={'amber'} onPress={async () => {
+                      if (auth.currentUser && !chapter.includes(value.chapter_endpoint)) {
+                        await updateDoc(doc(db, 'users', auth.currentUser.email), {
+                          finishedChapter: arrayUnion({ title: endpoint, chapterEndpoint: value.chapter_endpoint, date: timestamp })
+                        })
+                      }
                       navigation.navigate('komikChapter', {
                         endpoint: value.chapter_endpoint
                       })

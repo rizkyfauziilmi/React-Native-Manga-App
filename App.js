@@ -1,6 +1,3 @@
-// In App.js in a new project
-
-import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NativeBaseProvider, extendTheme } from 'native-base';
@@ -8,6 +5,14 @@ import HomeScreen from './screens/home/HomeScreen';
 import KomikDetailScreen from './screens/contents/KomikDetailScreen';
 import komikChapterSceen from './screens/contents/KomikChapterScreen';
 import Setting from './screens/setting/Setting';
+import Login from './screens/auth/Login';
+import Register from './screens/auth/Register';
+import Dashboard from './screens/dashboard/Dashboard';
+import { useEffect, useState } from 'react';
+import { auth } from './firebase/firebaseConfig';
+import About from './screens/setting/About';
+import Account from './screens/setting/Account';
+import HelpAndSupport from './screens/setting/HelpAndSupport';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,14 +24,6 @@ function App() {
           return {
             _light: { color: 'black' },
             _dark: { color: 'white' },
-          };
-        },
-      },
-      HStack: {
-        baseStyle: (props) => {
-          return {
-            _light: { bg: 'white' },
-            _dark: { bg: 'coolGray.800' },
           };
         },
       },
@@ -52,10 +49,62 @@ function App() {
     },
   });
 
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
+
   return (
     <NativeBaseProvider theme={theme}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName='home'>
+          {user ?
+            <>
+              <Stack.Screen
+                name='dashboard'
+                component={Dashboard}
+                options={{
+                  animation: 'slide_from_right',
+                  headerShown: false
+                }}
+              />
+              <Stack.Screen
+                name='account'
+                component={Account}
+                options={{
+                  animation: 'slide_from_right',
+                  headerShown: false
+                }}
+              />
+            </> : <>
+              <Stack.Screen
+                name='login'
+                component={Login}
+                options={{
+                  animation: 'slide_from_right',
+                  headerShown: false
+                }}
+              />
+              <Stack.Screen
+                name='register'
+                component={Register}
+                options={{
+                  animation: 'slide_from_right',
+                  headerShown: false
+                }}
+              />
+            </>
+          }
           <Stack.Screen
             name="home"
             component={HomeScreen}
@@ -83,6 +132,22 @@ function App() {
           <Stack.Screen
             name='setting'
             component={Setting}
+            options={{
+              animation: 'slide_from_right',
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            name='about'
+            component={About}
+            options={{
+              animation: 'slide_from_right',
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            name='helpAndSupport'
+            component={HelpAndSupport}
             options={{
               animation: 'slide_from_right',
               headerShown: false

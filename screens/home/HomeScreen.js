@@ -1,4 +1,4 @@
-import { Heading, ScrollView } from 'native-base'
+import { Heading, ScrollView, VStack } from 'native-base'
 import BottomBar from '../../components/BottomBar'
 import TopBar from '../../components/TopBar'
 import TopSectionUi from '../../components/TopSectionUi'

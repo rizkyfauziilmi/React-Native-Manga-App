@@ -2,7 +2,7 @@
   "expo": {
     "name": "jozu",
     "slug": "jozu",
-    "version": "2.0.0",
+    "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -11,6 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "webViewManuallyMocked": true,
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -19,7 +20,6 @@
     },
     "android": {
       "package": "com.Kyra.Jozu",
-      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
