@@ -38,12 +38,10 @@ const About = ({ navigation, route }) => {
                     </VStack>
                     <Divider />
                     <VStack>
-                        <Heading pb={1} size={'md'} textAlign={'center'}>update version 3.0.0</Heading>
+                        <Heading pb={1} size={'md'} textAlign={'center'}>update version 3.0.1</Heading>
                         <List p={3} mb={5}>
-                            <Text fontWeight={'medium'}>• Login feature: users can enter the application using an email and password encrypted with firebase.</Text>
-                            <Text fontWeight={'medium'}>• Settings feature: users can change their profile information and app preferences.</Text>
-                            <Text fontWeight={'medium'}>• UI updates: improve the overall appearance and navigation of the app.</Text>
-                            <Text fontWeight={'medium'}>• Chapter history feature: users can track currently reading manga and pick up where they left off.</Text>
+                            <Text fontWeight={'medium'}>• Fixed bugs: redirect issues after login and register fixed.</Text>
+                            <Text fontWeight={'medium'}>• Favorite feature: users can add their favorite comic.</Text>
                             <Text fontWeight={'medium'} textAlign={'center'} pt={5}>-Always make sure to update your app to the latest version to enjoy the latest features and improvements we've made.-</Text>
                         </List>
                     </VStack>

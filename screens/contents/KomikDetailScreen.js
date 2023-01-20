@@ -21,7 +21,7 @@ const KomikDetailScreen = ({ route, navigation }) => {
   let timestamp = new Timestamp.now()
   const data = value?.data()
   const chapter = data?.finishedChapter?.map((item) => item.chapterEndpoint)
-  
+
   useEffect(() => {
     const getKomikDetail = async () => {
       const response = await fetch(`https://komikindo-api.vercel.app/komik-detail/${endpoint}`)
@@ -32,7 +32,7 @@ const KomikDetailScreen = ({ route, navigation }) => {
 
     getKomikDetail()
   }, [])
-  
+
   if (komikDetail && !loading && value) {
     const pengarang = komikDetail.info.filter(item => {
       return item.hasOwnProperty('Pengarang');
@@ -43,6 +43,7 @@ const KomikDetailScreen = ({ route, navigation }) => {
         <TopBar headingTitle={title} />
         <ScrollView>
           <VStack justifyContent={'center'} safeArea>
+            {!chapter ? <Text color={'red.500'}>⚠️ Your Accout do Not Have a Database, Please contact developer at Help & Support Section</Text> : ""}
             <HStack width={'50%'} pl={4}>
               <Image shadow={100} source={{
                 uri: komikDetail.thumb
@@ -112,8 +113,8 @@ const KomikDetailScreen = ({ route, navigation }) => {
                         <Text opacity={0.5}>{value.chapter_date}</Text>
                       </VStack>
                     </HStack>
-                    <IconButton _icon={{ as: Feather, name: chapter.includes(value.chapter_endpoint) ? "book-open" : "book" }} variant={chapter.includes(value.chapter_endpoint) ? 'subtle' : 'solid'} colorScheme={'amber'} onPress={async () => {
-                      if (auth.currentUser && !chapter.includes(value.chapter_endpoint)) {
+                    <IconButton _icon={{ as: Feather, name: chapter?.includes(value.chapter_endpoint) ? "book-open" : "book" }} variant={chapter?.includes(value.chapter_endpoint) ? 'subtle' : 'solid'} colorScheme={'amber'} onPress={async () => {
+                      if (auth.currentUser && !chapter?.includes(value.chapter_endpoint)) {
                         await updateDoc(doc(db, 'users', auth.currentUser.email), {
                           finishedChapter: arrayUnion({ title: endpoint, chapterEndpoint: value.chapter_endpoint, date: timestamp })
                         })

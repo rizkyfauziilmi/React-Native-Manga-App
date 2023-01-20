@@ -41,7 +41,12 @@ const Register = ({ navigation, route }) => {
                         }
                     }
                 }
-                signInWithEmailAndPassword(email, password)
+                if (user) {
+                    signInWithEmailAndPassword(email, password)
+                    if (auth.currentUser.metadata.creationTime === auth.currentUser.metadata.lastSignInTime) {
+                        navigation.navigate('account')
+                    }
+                }
             })
     }
 

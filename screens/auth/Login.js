@@ -18,8 +18,8 @@ const Login = ({ navigation, route }) => {
     const [password, setPassword] = useState("")
 
     const login = () => {
-        const success = signInWithEmailAndPassword(email, password)
-        if (success) {
+        signInWithEmailAndPassword(email, password)
+        if (!loading && user) {
             navigation.popToTop()
         }
     }
