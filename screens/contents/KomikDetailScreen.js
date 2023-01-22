@@ -1,15 +1,16 @@
-import { Badge, Heading, HStack, Image, ScrollView, Text, useColorMode, VStack, IconButton } from 'native-base'
+import { Badge, Heading, HStack, Image, ScrollView, Text, useColorMode, VStack, IconButton, Button, Icon } from 'native-base'
 import React, { useEffect, useState } from 'react'
-import { MaterialCommunityIcons, Feather } from '@expo/vector-icons'
+import { MaterialCommunityIcons, Feather, Ionicons } from '@expo/vector-icons'
 import Loading from '../../components/Loading'
 import TopBar from '../../components/TopBar'
 import { auth, db } from '../../firebase/firebaseConfig'
-import { updateDoc, doc, arrayUnion, serverTimestamp, Timestamp } from 'firebase/firestore'
+import { updateDoc, doc, arrayUnion, serverTimestamp, Timestamp, addDoc, arrayRemove } from 'firebase/firestore'
 import { useDocument } from 'react-firebase-hooks/firestore'
 
 const KomikDetailScreen = ({ route, navigation }) => {
   const { endpoint, title } = route.params
   const [komikDetail, setKomikDetail] = useState(null)
+  const [loadingFavorite, setLoadingFavorite] = useState(false)
   const { colorMode } = useColorMode()
   const [value, loading, error] = useDocument(
     doc(db, 'users', auth.currentUser ? auth.currentUser.email : 'user@example.com'),
@@ -20,7 +21,9 @@ const KomikDetailScreen = ({ route, navigation }) => {
 
   let timestamp = new Timestamp.now()
   const data = value?.data()
-  const chapter = data?.finishedChapter?.map((item) => item.chapterEndpoint)
+  const chapter = data?.finishedChapter.map((item) => item.chapterEndpoint)
+  const favorite = data?.favoriteManga.filter((item) => item.endpoint === endpoint)[0]
+  const isFavorite = favorite?.endpoint
 
   useEffect(() => {
     const getKomikDetail = async () => {
@@ -44,17 +47,36 @@ const KomikDetailScreen = ({ route, navigation }) => {
         <ScrollView>
           <VStack justifyContent={'center'} safeArea>
             {!chapter ? <Text color={'red.500'}>⚠️ Your Accout do Not Have a Database, Please contact developer at Help & Support Section</Text> : ""}
-            <HStack width={'50%'} pl={4}>
+            <HStack width={'100%'} pl={4}>
               <Image shadow={100} source={{
                 uri: komikDetail.thumb
-              }} alt="Alternate Text" size={200} rounded="md" />
-              <VStack width={'100%'} pl={5}>
+              }} alt={komikDetail.title} style={{ resizeMode: 'contain', width: '30%' }} size={150} rounded="md" />
+              <VStack width={'60%'} pl={5}>
                 <Heading size={'md'}>{komikDetail.title}</Heading>
                 <Text opacity={0.5} width={'100%'}>By {pengarang[0].Pengarang.trim()}</Text>
                 <HStack space={1}>
                   <Image shadow={2} source={require('../../assets/star.png')} alt="Alternate Text" size={5} />
                   <Text fontWeight={'bold'}>{komikDetail.score}</Text>
                 </HStack>
+                {auth.currentUser ? <Button mt={2} leftIcon={<Icon as={Ionicons} name={isFavorite ? "heart-dislike-sharp" : "heart-sharp"} color={'white'} />} colorScheme={'red'} isLoading={loadingFavorite} spinnerPlacement="start" isLoadingText="Loading" onPress={async () => {
+                  if (isFavorite) {
+                    setLoadingFavorite(true)
+                    await updateDoc(doc(db, 'users', auth.currentUser.email), {
+                      favoriteManga: arrayRemove(favorite)
+                    })
+                      .finally(() => {
+                        setLoadingFavorite(false)
+                      })
+                  } else {
+                    setLoadingFavorite(true)
+                    await updateDoc(doc(db, 'users', auth.currentUser.email), {
+                      favoriteManga: arrayUnion({ endpoint: endpoint, date: timestamp })
+                    })
+                      .finally(() => {
+                        setLoadingFavorite(false)
+                      })
+                  }
+                }}>{isFavorite ? "Remove Favorite" : "Add Favorite"}</Button> : ""}
               </VStack>
             </HStack>
             <VStack paddingX={4}>

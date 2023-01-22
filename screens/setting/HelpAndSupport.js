@@ -24,7 +24,7 @@ const HelpAndSupport = ({ navigation, route }) => {
                         fontWeight: "medium",
                         textAlign: 'center'
                     }}>
-                        <Icon as={MaterialCommunityIcons} color={'white'} name="gmail" size={20}/>
+                        <Icon as={MaterialCommunityIcons} color={'white'} name="gmail" size={20} />
                         Gmail
                     </Box>
                 </Link>
@@ -34,7 +34,7 @@ const HelpAndSupport = ({ navigation, route }) => {
                         fontWeight: "medium",
                         textAlign: 'center'
                     }}>
-                        <Icon as={AntDesign} color={'white'} name="instagram" size={20}/>
+                        <Icon as={AntDesign} color={'white'} name="instagram" size={20} />
                         Instagram
                     </Box>
                 </Link>
@@ -44,7 +44,7 @@ const HelpAndSupport = ({ navigation, route }) => {
                         fontWeight: "medium",
                         textAlign: 'center'
                     }}>
-                        <Icon as={AntDesign} color={'black'} name="github" size={20}/>
+                        <Icon as={AntDesign} color={'black'} name="github" size={20} />
                         Github
                     </Box>
                 </Link>
@@ -54,7 +54,7 @@ const HelpAndSupport = ({ navigation, route }) => {
                         fontWeight: "medium",
                         textAlign: 'center'
                     }}>
-                        <Icon as={MaterialCommunityIcons} color={'#5865F2'} name="discord" size={20}/>
+                        <Icon as={MaterialCommunityIcons} color={'#5865F2'} name="discord" size={20} />
                         Discord
                     </Box>
                 </Link>

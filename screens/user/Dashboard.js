@@ -23,7 +23,7 @@ const Dashboard = ({ navigation, route }) => {
                     </Avatar>
                     <VStack>
                         <Heading size={'lg'}>
-                            {auth.currentUser.displayName||"Display Name"}
+                            {auth.currentUser.displayName || "Display Name"}
                         </Heading>
                         <Text fontWeight={'bold'} opacity={0.5}>
                             {auth.currentUser.email}

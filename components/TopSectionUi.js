@@ -37,7 +37,7 @@ const TopSectionUi = ({ type = "Manga", navigationProps, title = "TOP SECTION UI
                                 })}>
                                     <VStack width={150}>
                                         <Skeleton height={200} isLoaded={!isLoading}>
-                                            <Image position={'relative'} shadow={10} source={{ uri: value.thumb }} borderRadius={5} alt={value.title} size={210} />
+                                            <Image position={'relative'} shadow={10} source={{ uri: value.thumb }} borderRadius={5} alt={value.title} style={{ resizeMode: 'contain' }} size={210} />
                                         </Skeleton>
                                         <Skeleton.Text lines={1} pt={2} isLoaded={!isLoading}>
                                             <Heading width={150} paddingY={3} pb={2} size={'xs'} noOfLines={1}>{value.title}</Heading>

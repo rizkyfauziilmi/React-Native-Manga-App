@@ -45,7 +45,7 @@ const Account = ({ navigation, route }) => {
                         </VStack>
                         <HStack width={'100%'} justifyContent={'space-around'}>
                             <Button isLoading={updating} spinnerPlacement="start" isLoadingText="Updating" isDisabled={(photoUrl === "" || photoUrl === auth.currentUser.photoURL) && (nickname === "" || nickname === auth.currentUser.displayName) ? true : false} leftIcon={<Icon as={AntDesign} name="save" />} fontWeight={'bold'} width={'40%'} colorScheme={'success'} onPress={async () => {
-                                const success = await updateProfile({ displayName: auth.currentUser.displayName || nickname, photoURL: auth.currentUser.photoURL || photoUrl });
+                                const success = await updateProfile({ displayName: nickname || auth.currentUser.displayName, photoURL: photoUrl || auth.currentUser.photoURL });
                                 if (success) {
                                     navigation.popToTop()
                                     navigation.navigate('dashboard')

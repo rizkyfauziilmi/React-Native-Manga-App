@@ -1,10 +1,10 @@
-import { Center, Box, VStack, Heading, FormControl, Input, Button, Text, useToast } from 'native-base'
+import { Center, Box, VStack, Heading, FormControl, Input, Button, Text } from 'native-base'
 import BottomBar from '../../components/BottomBar'
 import TopBar from '../../components/TopBar'
 import { useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { auth, db } from '../../firebase/firebaseConfig'
 import { useState } from 'react'
-import { addDoc, doc, setDoc } from 'firebase/firestore'
+import { doc, setDoc } from 'firebase/firestore'
 const Register = ({ navigation, route }) => {
     const [
         createUserWithEmailAndPassword,

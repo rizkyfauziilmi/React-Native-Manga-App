@@ -1,7 +1,6 @@
-import { Text, VStack, Center, Box, FormControl, Heading, Button, HStack, Link, Input, useToast } from 'native-base'
+import { Text, VStack, Center, Box, FormControl, Heading, Button, HStack, Link, Input } from 'native-base'
 import BottomBar from '../../components/BottomBar'
 import TopBar from '../../components/TopBar'
-import { FontAwesome } from '@expo/vector-icons'
 import { auth } from '../../firebase/firebaseConfig'
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { useState } from 'react'

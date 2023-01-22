@@ -7,12 +7,13 @@ import komikChapterSceen from './screens/contents/KomikChapterScreen';
 import Setting from './screens/setting/Setting';
 import Login from './screens/auth/Login';
 import Register from './screens/auth/Register';
-import Dashboard from './screens/dashboard/Dashboard';
+import Dashboard from './screens/user/Dashboard';
 import { useEffect, useState } from 'react';
 import { auth } from './firebase/firebaseConfig';
 import About from './screens/setting/About';
 import Account from './screens/setting/Account';
 import HelpAndSupport from './screens/setting/HelpAndSupport';
+import Favorite from './screens/user/Favorite';
 
 const Stack = createNativeStackNavigator();
 
@@ -83,6 +84,14 @@ function App() {
                 component={Account}
                 options={{
                   animation: 'slide_from_right',
+                  headerShown: false
+                }}
+              />
+              <Stack.Screen
+                name='favorite'
+                component={Favorite}
+                options={{
+                  animation: 'slide_from_left',
                   headerShown: false
                 }}
               />

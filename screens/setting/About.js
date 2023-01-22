@@ -16,7 +16,7 @@ const About = ({ navigation, route }) => {
                     <Divider />
                     <HStack alignItems={'center'} space={2}>
                         <Icon as={MaterialIcons} name="update" />
-                        <Text fontWeight={'medium'}>Version: 3.0.0</Text>
+                        <Text fontWeight={'medium'}>Version: 3.1.2</Text>
                     </HStack>
                     <Divider />
                     <HStack alignItems={'center'} space={2}>
@@ -38,9 +38,12 @@ const About = ({ navigation, route }) => {
                     </VStack>
                     <Divider />
                     <VStack>
-                        <Heading pb={1} size={'md'} textAlign={'center'}>update version 3.0.1</Heading>
+                        <Heading pb={1} size={'md'} textAlign={'center'}>update version 3.1.2</Heading>
                         <List p={3} mb={5}>
-                            <Text fontWeight={'medium'}>• Fixed bugs: redirect issues after login and register fixed.</Text>
+                            <Text fontWeight={'medium'}>• Securtiy Improvement: Use Environtment Variable</Text>
+                            <Text fontWeight={'medium'}>• Fix Bugs: update Profile</Text>
+                            <Text fontWeight={'medium'}>• Update UI: Improve UI a little bit</Text>
+                            <Text fontWeight={'medium'}>• Live Search feature: users can do searching now.</Text>
                             <Text fontWeight={'medium'}>• Favorite feature: users can add their favorite comic.</Text>
                             <Text fontWeight={'medium'} textAlign={'center'} pt={5}>-Always make sure to update your app to the latest version to enjoy the latest features and improvements we've made.-</Text>
                         </List>
