@@ -65,6 +65,7 @@ const About = ({ navigation, route }) => {
     "react-dom": "18.1.0",
     "react-firebase-hooks": "^5.1.1",
     "react-native": "0.70.5",
+    "react-native-dotenv": "^3.4.7",
     "react-native-safe-area-context": "4.4.1",
     "react-native-screens": "~3.18.0",
     "react-native-svg": "13.4.0"

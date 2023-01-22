@@ -5,12 +5,12 @@ import { apiKey, authDomain, projectId, messagingSenderId, appId, measurementId 
 
 
 const firebaseConfig = {
-  apiKey: apiKey,
-  authDomain: authDomain,
-  projectId: projectId,
-  messagingSenderId: messagingSenderId,
-  appId: appId,
-  measurementId: measurementId
+  apiKey: apiKey || process.env.apiKey,
+  authDomain: authDomain || process.env.authDomain,
+  projectId: projectId || process.env.projectId,
+  messagingSenderId: messagingSenderId || process.env.messagingSenderId,
+  appId: appId || process.env.appId,
+  measurementId: measurementId || process.env.measurementId
 };
 
 // Initialize Firebase

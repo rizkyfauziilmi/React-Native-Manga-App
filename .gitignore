@@ -12,6 +12,8 @@ npm-debug.*
 .env.development
 .env.development.local
 .env.local
+.env.production
+.env.production.local
 web-build/
 
 # macOS
