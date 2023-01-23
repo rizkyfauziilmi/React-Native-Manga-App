@@ -14,6 +14,7 @@ import About from './screens/setting/About';
 import Account from './screens/setting/Account';
 import HelpAndSupport from './screens/setting/HelpAndSupport';
 import Favorite from './screens/user/Favorite';
+import History from './screens/user/History';
 
 const Stack = createNativeStackNavigator();
 
@@ -90,6 +91,14 @@ function App() {
               <Stack.Screen
                 name='favorite'
                 component={Favorite}
+                options={{
+                  animation: 'slide_from_left',
+                  headerShown: false
+                }}
+              />
+              <Stack.Screen
+                name='history'
+                component={History}
                 options={{
                   animation: 'slide_from_left',
                   headerShown: false

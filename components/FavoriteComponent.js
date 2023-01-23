@@ -1,4 +1,4 @@
-import { Button, Heading, HStack, Icon, Image, Text, VStack } from "native-base"
+import { Button, Heading, HStack, Icon, Image, Spinner, Text, VStack } from "native-base"
 import { useEffect, useState } from "react"
 import { Entypo, Ionicons } from '@expo/vector-icons'
 import { arrayRemove, doc, updateDoc } from "firebase/firestore"
@@ -8,6 +8,7 @@ import { useDocument } from "react-firebase-hooks/firestore"
 const FavoriteComponent = ({ endpoint, date, navigationProps, routeProps }) => {
     const [data, setData] = useState()
     const [loading, setLoading] = useState(false)
+    const [fetching, setFetching] = useState(false)
     const [value, loadingDoc, error] = useDocument(
         doc(db, 'users', auth.currentUser ? auth.currentUser.email : 'user@example.com'),
         {
@@ -19,13 +20,27 @@ const FavoriteComponent = ({ endpoint, date, navigationProps, routeProps }) => {
 
     useEffect(() => {
         const getData = async () => {
+            setFetching(true)
             const response = await fetch(`https://komikindo-api.vercel.app/komik-detail/${endpoint}`)
             const data = await response.json()
+
             setData(data[0])
+            setFetching(false)
         }
 
         getData()
     }, [])
+
+    if (loading || fetching) {
+        return (
+            <HStack space={2} justifyContent="center">
+                <Spinner color="emerald.500" accessibilityLabel="Loading" />
+                <Heading color="emerald.500" fontSize="xl">
+                    Loading
+                </Heading>
+            </HStack>
+        )
+    }
 
     if (data && !loadingDoc) {
         return (

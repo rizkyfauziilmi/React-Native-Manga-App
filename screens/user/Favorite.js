@@ -1,11 +1,9 @@
 import { doc } from "firebase/firestore"
-import { Image, ScrollView, Text, VStack } from "native-base"
-import { useEffect, useState } from "react"
+import { ScrollView, VStack, Heading } from "native-base"
 import { useDocument } from "react-firebase-hooks/firestore"
 import BottomBar from "../../components/BottomBar"
 import FavoriteComponent from "../../components/FavoriteComponent"
 import Loading from "../../components/Loading"
-import TopBar from "../../components/TopBar"
 import { auth, db } from "../../firebase/firebaseConfig"
 
 const Favorite = ({ navigation, route }) => {
@@ -19,8 +17,8 @@ const Favorite = ({ navigation, route }) => {
 
     if (value) {
         return (
-            <VStack height={'100%'} justifyContent={'space-between'}>
-                <TopBar headingTitle="Favorite" />
+            <VStack height={'100%'} pt={10} justifyContent={'space-between'}>
+                <Heading pb={2} textAlign={'center'}>Favorite</Heading>
                 <ScrollView >
                     <VStack alignItems={'center'} width={'100%'} pt={5} space={3}>
                         {favoriteManga.map((item, index) => {

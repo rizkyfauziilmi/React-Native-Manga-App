@@ -48,14 +48,14 @@ const TopBar = ({ headingTitle = "JOZU" }) => {
             <HStack justifyContent={'space-between'} alignItems={"center"} safeArea>
                 {isCanGoBack ? <IconButton icon={<ChevronLeftIcon />} onPress={() => navigation.goBack()} /> : ""}
                 {route.name === 'home' && isLogin ? <Heading size={'sm'}>Hi, {auth.currentUser.displayName || auth.currentUser.email} 👋</Heading> : ""}
-                {route.name !== 'home' ? <Heading alignSelf={'center'} size="sm" justifyContent={'space-between'}>{shortenSentence(headingTitle, 20)}</Heading> : ""}
+                {route.name !== 'home' ? <Heading alignSelf={'center'} size="sm" justifyContent={'space-between'}>{shortenSentence(headingTitle, 50)}</Heading> : ""}
             </HStack>
             {route.name === 'home' ? <Input leftElement={<Icon as={Feather} name="search" size={5} ml={2} />} width={'90%'} borderRadius={20} type='text' variant={'filled'} placeholder="Search..." onChangeText={(text) => {
                 handleSearch(text)
             }} /> : ""}
             {searchData.length !== 0 ? <ScrollView horizontal>
                 <HStack space={1} width={'100%'} justifyContent={'center'} pl={5} pr={10}>
-                    {searchData.map((value) => {
+                    {searchData?.map((value) => {
                         return (
                             <Pressable key={value._id} onPress={() => {
                                 navigation.navigate('komikDetail', {
@@ -68,9 +68,9 @@ const TopBar = ({ headingTitle = "JOZU" }) => {
                                         uri: value.thumb
                                     }} alt={value.title} style={{ resizeMode: 'contain' }} size={90} />
                                     <VStack>
-                                        <Heading size={'xs'}>{shortenSentence(value.title, 20)}</Heading>
+                                        <Heading size={'xs'}>{shortenSentence(value.title, 30)}</Heading>
                                         <Text fontSize={'xs'} opacity={0.5} fontWeight={'bold'}>⭐ {value.score} / 10</Text>
-                                        <Text fontSize={'xs'} opacity={0.5} width={150} noOfLines={3}>{value.sinopsis.replace(`Manga ${value.title} yang dibuat oleh komikus bernama `, "").replace(`${value.info.filter(item => item.hasOwnProperty('Pengarang')).map(item => item.Pengarang)} ini bercerita tentang `, "")}</Text>
+                                        <Text fontSize={'xs'} opacity={0.5} width={150} noOfLines={3}>{value?.sinopsis.replace("Manga", "").replace("Manhwa", "").replace("Manhua", "").replace(` ${value.title} yang dibuat oleh komikus bernama `, "").replace(`${value.info.filter(item => item.hasOwnProperty('Pengarang')).map(item => item.Pengarang)} ini bercerita tentang `, "")}</Text>
                                     </VStack>
                                 </HStack>
                             </Pressable>
