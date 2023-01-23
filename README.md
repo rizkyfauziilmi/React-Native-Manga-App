@@ -1,4 +1,8 @@
 
+# Manga-react-native-app
+
+This Project use this [api](https://github.com/RizkyFauziIlmi/komikindo-api)
+
 ## Installation
 
 ### Instal the APK (for using and testing only)
