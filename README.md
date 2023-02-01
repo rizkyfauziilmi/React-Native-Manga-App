@@ -1,13 +1,13 @@
 
 # Manga-react-native-app
 
-This Project use this [api](https://github.com/RizkyFauziIlmi/komikindo-api)
+This Project use this [api](https://github.com/RizkyFauziIlmi/Manga-API)
 
 ## Installation
 
 ### Instal the APK (for using and testing only)
 
-* download apk from this [link](https://drive.google.com/file/d/1Ic5JGao-Qdrp0iHMUOReW55MeWC9075a/view?usp=share_link). (Jozu 3.2.2)
+* download apk from this [link](https://drive.google.com/file/d/1vS4MMgyEPSI9IHEy1yfqLclcl_fuvgc7/view?usp=sharing). (Jozu 3.3.3)
 
 * after that install in your device
 
@@ -16,8 +16,8 @@ This Project use this [api](https://github.com/RizkyFauziIlmi/komikindo-api)
 * remote repo
 
 ```bash
-  git remote https://github.com/RizkyFauziIlmi/Manga-react-native-app.git
-  cd Manga-react-native-app
+  git remote https://github.com/RizkyFauziIlmi/React-Native-Manga-App.git
+  cd React-Native-Manga-App
 ```
 
 * install dependencies
