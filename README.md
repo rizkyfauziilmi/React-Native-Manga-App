@@ -7,7 +7,7 @@ This Project use this [api](https://github.com/RizkyFauziIlmi/Manga-API)
 
 ### Instal the APK (for using and testing only)
 
-* download apk from this [link](https://github.com/RizkyFauziIlmi/React-Native-Manga-App/releases/download/v3.3.3/Jozu.v3.3.3.apk). (Jozu 3.3.3)
+* download apk from this [Release Version](https://github.com/RizkyFauziIlmi/React-Native-Manga-App/releases/tag/v3.3.3). (Jozu v3.3.3)
 
 * after that install in your device
 
