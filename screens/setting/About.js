@@ -16,7 +16,7 @@ const About = ({ navigation, route }) => {
                     <Divider />
                     <HStack alignItems={'center'} space={2}>
                         <Icon as={MaterialIcons} name="update" />
-                        <Text fontWeight={'medium'}>Version: 3.2.2</Text>
+                        <Text fontWeight={'medium'}>Version: 3.3.3</Text>
                     </HStack>
                     <Divider />
                     <HStack alignItems={'center'} space={2}>
@@ -38,9 +38,11 @@ const About = ({ navigation, route }) => {
                     </VStack>
                     <Divider />
                     <VStack>
-                        <Heading pb={1} size={'md'} textAlign={'center'}>update version 3.2.2</Heading>
+                        <Heading pb={1} size={'md'} textAlign={'center'}>update version 3.3.3</Heading>
                         <List p={3} mb={5}>
-                            <Text fontWeight={'medium'}>• History feature: Now users can see history</Text>
+                            <Text fontWeight={'medium'}>• Completed feature: Now users can see Completed List</Text>
+                            <Text fontWeight={'medium'}>• Bug Fixed: Button now can be pressed in all sections</Text>
+                            <Text fontWeight={'medium'}>• UI Improve: Photo chapter now more responsive</Text>
                             <Text fontWeight={'medium'} textAlign={'center'} pt={5}>-Always make sure to update your app to the latest version to enjoy the latest features and improvements we've made.-</Text>
                         </List>
                     </VStack>

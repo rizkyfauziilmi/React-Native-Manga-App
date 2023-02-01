@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native"
-import { HStack, IconButton, Image, ScrollView, VStack, Button } from "native-base"
+import { HStack, IconButton, Image, ScrollView, VStack, Button, Text } from "native-base"
 import { useEffect, useState } from "react"
 import { Fontisto, MaterialIcons } from '@expo/vector-icons'
 import Loading from "../../components/Loading"
@@ -13,7 +13,10 @@ const KomikChapterSceen = ({ route }) => {
 
     const { endpoint } = route.params
     const [komikChapter, setKomikChapter] = useState(null)
-    const [zoom, setZoom] = useState(500)
+    const [totalChapter, setTotalChapter] = useState(null)
+    const [loadingDatabase, setLoadingDatabase] = useState(false)
+    const [change, setChange] = useState(false)
+    const [zoom, setZoom] = useState(255)
     const [fullScreen, setFullScreen] = useState(false)
     const [isOpacity, setIsOpacity] = useState(false)
     const [value, loading, error] = useDocument(
@@ -26,6 +29,7 @@ const KomikChapterSceen = ({ route }) => {
     let timestamp = new Timestamp.now()
     const data = value?.data()
     const chapter = data?.finishedChapter?.map((item) => item.chapterEndpoint)
+    const lastChapter = totalChapter?.map((item) => item.chapter_endpoint).filter((item) => chapter?.includes(item)).length
 
     useEffect(() => {
         const getKomikchapter = async () => {
@@ -33,27 +37,43 @@ const KomikChapterSceen = ({ route }) => {
             const data = await response.json()
 
             setKomikChapter(data[0])
+
+        }
+        
+        const getTotalChapter = async () => {
+            const responseTotalChapter = await fetch(`https://komikindo-api.vercel.app/komik-detail/${endpoint.substring(0, endpoint.indexOf("-chapter-"))}`)
+            const dataTotalChapter = await responseTotalChapter.json()
+    
+            setTotalChapter(dataTotalChapter[0]?.chapter_list)
         }
 
         getKomikchapter()
+        getTotalChapter()
     }, [])
 
-    if (komikChapter && !loading && value) {
+    if (komikChapter && !loading && value && totalChapter) {
         return (
             <>
                 {!fullScreen && <TopBar headingTitle={komikChapter.title.replace("Komik", "")} />}
-                <ScrollView>
+                <VStack height={'100%'} justifyContent={'space-between'} pt={2}>
                     {!fullScreen &&
-                        <HStack space={2} justifyContent={'center'} pb={2} flexWrap={'wrap'}>
+                        <HStack height={komikChapter.relative.length <= 2 ? '10%' : '15%'} space={2} justifyContent={'center'} pb={2} flexWrap={'wrap'}>
                             {komikChapter.relative.map((value, index) => {
                                 return (
-                                    <Button mb={2} key={index} colorScheme={'amber'} onPress={async () => {
+                                    <Button isLoading={loadingDatabase} spinnerPlacement="start" isLoadingText="Loading" mb={2} key={index} colorScheme={'amber'} onPress={async () => {
                                         if (value.relative_endpoint.includes('chapter')) {
+                                            setLoadingDatabase(true)
                                             if (auth.currentUser && !chapter.includes(value.relative_endpoint)) {
                                                 await updateDoc(doc(db, 'users', auth.currentUser.email), {
-                                                    finishedChapter: arrayUnion({ title: komikChapter.relative[1].relative_endpoint, chapterEndpoint: value.relative_endpoint, date: timestamp })
+                                                    finishedChapter: arrayUnion({ title: endpoint.substring(0, endpoint.indexOf("-chapter-")), chapterEndpoint: value.relative_endpoint, date: timestamp })
                                                 })
+                                                if (lastChapter === totalChapter.length - 1) {
+                                                    await updateDoc(doc(db, 'users', auth.currentUser.email), {
+                                                        finishedManga: arrayUnion({ title: endpoint.substring(0, endpoint.indexOf("-chapter-")), date: timestamp })
+                                                    })
+                                                }
                                             }
+                                            setLoadingDatabase(false)
                                             navigation.goBack()
                                             navigation.navigate('komikChapter', {
                                                 endpoint: value.relative_endpoint
@@ -68,45 +88,25 @@ const KomikChapterSceen = ({ route }) => {
                             })}
                         </HStack>
                     }
-                    <VStack position={'relative'}>
-                        {komikChapter.images.map((value) => {
-                            return (
-                                <Image key={value._id} source={{
-                                    uri: value.image_link
-                                }} alt={value.image_alt} size={zoom} style={{ resizeMode: 'contain' }} />
-                            )
-                        })}
+                    <VStack alignItems={'center'} position={'relative'} width={'100%'}>
+                        <ScrollView>
+                            {komikChapter.images.map((value) => {
+                                return (
+                                    <Image key={value._id} source={{
+                                        uri: value.image_link
+                                    }} alt={value.image_alt} size={!change ? '2xl' : zoom} resizeMode="contain" />
+                                )
+                            })}
+                        </ScrollView>
                     </VStack>
-                    {!fullScreen &&
-                        <HStack space={2} pt={2} justifyContent={'center'} pb={2} flexWrap={'wrap'}>
-                            {komikChapter.relative.map((value, index) => {
-                                return (
-                                    <Button colorScheme={'amber'} mb={2} key={index} onPress={async () => {
-                                        if (value.relative_endpoint.includes('chapter')) {
-                                            if (auth.currentUser && !chapter.includes(value.relative_endpoint)) {
-                                                await updateDoc(doc(db, 'users', auth.currentUser.email), {
-                                                    finishedChapter: arrayUnion({ title: komikChapter.relative[1].relative_endpoint, chapterEndpoint: value.relative_endpoint, date: timestamp })
-                                                })
-                                            }
-                                            navigation.goBack()
-                                            navigation.navigate('komikChapter', {
-                                                endpoint: value.relative_endpoint
-                                            })
-                                        } else {
-                                            navigation.goBack()
-                                        }
-                                    }} >
-                                        {value.relative_title}
-                                    </Button>
-                                )
-                            })}
-                        </HStack>
-                    }
-                </ScrollView>
+                </VStack>
                 <VStack position={'absolute'} bottom={12} style={{ backgroundColor: 'unset' }} right={5} space={3}>
                     <IconButton size={10} opacity={isOpacity ? 1 : 0.5} colorScheme={'amber'} _icon={{ as: Fontisto, name: "zoom-plus" }} variant={'solid'} onPress={() => {
                         setZoom(zoom + 50)
                         setIsOpacity(true)
+                        if (!change) {
+                            setChange(true)
+                        }
                         setTimeout(() => {
                             setIsOpacity(false)
                         }, 4000)
@@ -114,6 +114,9 @@ const KomikChapterSceen = ({ route }) => {
                     <IconButton size={10} opacity={isOpacity ? 1 : 0.5} colorScheme={'amber'} _icon={{ as: MaterialIcons, name: !fullScreen ? "fullscreen" : "fullscreen-exit" }} variant={'solid'} onPress={() => {
                         setFullScreen(!fullScreen)
                         setIsOpacity(true)
+                        if (!change) {
+                            setChange(true)
+                        }
                         setTimeout(() => {
                             setIsOpacity(false)
                         }, 4000)

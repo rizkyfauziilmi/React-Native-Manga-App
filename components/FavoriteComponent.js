@@ -57,7 +57,9 @@ const FavoriteComponent = ({ endpoint, date, navigationProps, routeProps }) => {
                                 endpoint: data.endpoint,
                                 title: data.title
                             })
-                        }}>Read Now</Button>
+                        }}>
+                            <Text fontWeight={'bold'}>Read Now</Text>
+                        </Button>
                         <Button spinnerPlacement="start" isLoadingText="Loading" isLoading={loading} size={'sm'} leftIcon={<Icon as={Ionicons} name="heart-dislike-outline" />} colorScheme={'red'} onPress={async () => {
                             setLoading(true)
                             await updateDoc(doc(db, 'users', auth.currentUser.email), {
@@ -66,7 +68,9 @@ const FavoriteComponent = ({ endpoint, date, navigationProps, routeProps }) => {
                                 .finally(() => {
                                     setLoading(false)
                                 })
-                        }}>Remove Favorite</Button>
+                        }}>
+                            <Text fontWeight={'bold'}>Remove Favorite</Text>
+                        </Button>
                     </VStack>
                 </VStack>
             </HStack>

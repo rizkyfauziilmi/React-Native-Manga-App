@@ -2,7 +2,7 @@
   "expo": {
     "name": "jozu",
     "slug": "jozu",
-    "version": "3.2.2",
+    "version": "3.3.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",

@@ -10,6 +10,7 @@ import { useDocument } from 'react-firebase-hooks/firestore'
 const KomikDetailScreen = ({ route, navigation }) => {
   const { endpoint, title } = route.params
   const [komikDetail, setKomikDetail] = useState(null)
+  const [read, setRead] = useState(0)
   const [loadingFavorite, setLoadingFavorite] = useState(false)
   const { colorMode } = useColorMode()
   const [value, loading, error] = useDocument(
@@ -50,7 +51,7 @@ const KomikDetailScreen = ({ route, navigation }) => {
             <HStack width={'100%'} pl={4}>
               <Image shadow={100} source={{
                 uri: komikDetail.thumb
-              }} alt={komikDetail.title} style={{ resizeMode: 'contain', width: '30%' }} size={150} rounded="md" />
+              }} alt={komikDetail.title} resizeMode={'contain'} style={{ width: '30%' }} size={150} rounded="md" />
               <VStack width={'60%'} pl={5}>
                 <Heading size={'md'}>{komikDetail.title}</Heading>
                 <Text opacity={0.5} width={'100%'}>By {pengarang[0].Pengarang.trim()}</Text>
@@ -100,7 +101,7 @@ const KomikDetailScreen = ({ route, navigation }) => {
                   return (
                     <Image key={index} shadow={100} source={{
                       uri: value.teaser_image
-                    }} alt="Alternate Text" size={200} rounded="md" />
+                    }} alt={`${title} teaser ${index + 1}`} resizeMode={'contain'} size={150} rounded="md" />
                   )
                 })}
               </HStack>
@@ -123,7 +124,7 @@ const KomikDetailScreen = ({ route, navigation }) => {
               }} />
             </HStack>
             <VStack paddingX={4} pb={2} space={2}>
-              {komikDetail.chapter_list.map((value) => {
+              {komikDetail.chapter_list.map((value, index) => {
                 return (
                   <HStack key={value.chapter_title} justifyContent={'space-between'}>
                     <HStack alignItems={'center'} space={1}>
@@ -140,6 +141,11 @@ const KomikDetailScreen = ({ route, navigation }) => {
                         await updateDoc(doc(db, 'users', auth.currentUser.email), {
                           finishedChapter: arrayUnion({ title: endpoint, chapterEndpoint: value.chapter_endpoint, date: timestamp })
                         })
+                        if (chapter.filter((item) => komikDetail.chapter_list.map((value) => value.chapter_endpoint).includes(item)).length === komikDetail.chapter_list.length - 1) {
+                          await updateDoc(doc(db, 'users', auth.currentUser.email), {
+                            finishedManga: arrayUnion({ title: endpoint, date: timestamp })
+                          })
+                        }
                       }
                       navigation.navigate('komikChapter', {
                         endpoint: value.chapter_endpoint

@@ -33,7 +33,7 @@ const ReadingComponent = ({ endpoint, navigationProps, routeProps }) => {
         getData()
     }, [])
 
-    if (loading || fetching || !nextChapter) {
+    if (loading || fetching) {
         return (
             <HStack space={2} justifyContent="center">
                 <Spinner color="emerald.500" accessibilityLabel="Loading" />
@@ -43,6 +43,7 @@ const ReadingComponent = ({ endpoint, navigationProps, routeProps }) => {
             </HStack>
         )
     }
+
 
     if (data && value) {
         return (
@@ -55,13 +56,30 @@ const ReadingComponent = ({ endpoint, navigationProps, routeProps }) => {
                         <Heading size={'sm'}>{data.title}</Heading>
                         <VStack mb={2}>
                             <Text noOfLines={3}>{data.sinopsis.replace("Manga", "").replace("Manhwa", "").replace("Manhua", "").replace(` ${data.title} yang dibuat oleh komikus bernama `, "").replace(`${data.info.filter(item => item.hasOwnProperty('Pengarang')).map(item => item.Pengarang)} ini bercerita tentang `, "")}</Text>
-                            <Text opacity={0.5} fontWeight={'bold'}>{alreadyRead.length}/{data.chapter_list.length} • {((alreadyRead.length / data.chapter_list.length) * 100).toFixed()}%</Text>
-                            <Progress colorScheme="warning" size="sm" value={((alreadyRead.length / data.chapter_list.length) * 100).toFixed()} />
+                            <Text opacity={0.5} fontWeight={'bold'}>{!nextChapter || (alreadyRead.length === data.chapter_list.length - 1 && loadingDatabase) ? `${data.chapter_list.length}/${data.chapter_list.length} • 100%` : `${alreadyRead.length}/${data.chapter_list.length} • ${((alreadyRead.length / data.chapter_list.length) * 100).toFixed()}%`}</Text>
+                            <Progress colorScheme="warning" size="sm" value={!nextChapter || (alreadyRead.length === data.chapter_list.length - 1 && loadingDatabase) ? 100 : ((alreadyRead.length / data.chapter_list.length) * 100).toFixed()} />
                         </VStack>
                     </VStack>
                 </HStack>
-                <Button mt={1} spinnerPlacement="start" isLoadingText="Loading" isLoading={loadingDatabase} size={'sm'} colorScheme={'amber'}>
-                    <Text fontWeight={'bold'} onPress={async () => {
+                <Button mt={1} spinnerPlacement="start" isLoadingText="Loading" isLoading={loadingDatabase} size={'sm'} colorScheme={'amber'} onPress={async () => {
+                    if (alreadyRead.length === data.chapter_list.length - 1) {
+                        setLoadingDatabase(true)
+                        await updateDoc(doc(db, 'users', auth.currentUser.email), {
+                            finishedChapter: arrayUnion({ title: data.endpoint, chapterEndpoint: nextChapter, date: timestamp })
+                        })
+                            .finally(async () => {
+                                await updateDoc(doc(db, 'users', auth.currentUser.email), {
+                                    finishedManga: arrayUnion({ title: data.endpoint, date: timestamp })
+                                })
+                                    .finally(() => {
+                                        setLoadingDatabase(false)
+                                    })
+                            })
+                        navigationProps.popToTop()
+                        navigationProps.navigate('komikChapter', {
+                            endpoint: nextChapter
+                        })
+                    } else {
                         setLoadingDatabase(true)
                         await updateDoc(doc(db, 'users', auth.currentUser.email), {
                             finishedChapter: arrayUnion({ title: data.endpoint, chapterEndpoint: nextChapter, date: timestamp })
@@ -72,7 +90,9 @@ const ReadingComponent = ({ endpoint, navigationProps, routeProps }) => {
                         navigationProps.navigate('komikChapter', {
                             endpoint: nextChapter
                         })
-                    }}>Continue</Text>
+                    }
+                }}>
+                    <Text fontWeight={'bold'}>Continue</Text>
                 </Button>
             </VStack>
         )

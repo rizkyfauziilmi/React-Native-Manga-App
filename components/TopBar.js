@@ -48,7 +48,7 @@ const TopBar = ({ headingTitle = "JOZU" }) => {
             <HStack justifyContent={'space-between'} alignItems={"center"} safeArea>
                 {isCanGoBack ? <IconButton icon={<ChevronLeftIcon />} onPress={() => navigation.goBack()} /> : ""}
                 {route.name === 'home' && isLogin ? <Heading size={'sm'}>Hi, {auth.currentUser.displayName || auth.currentUser.email} 👋</Heading> : ""}
-                {route.name !== 'home' ? <Heading alignSelf={'center'} size="sm" justifyContent={'space-between'}>{shortenSentence(headingTitle, 50)}</Heading> : ""}
+                {route.name !== 'home' ? <Heading alignSelf={'center'} size="sm" justifyContent={'space-between'}>{shortenSentence(headingTitle, 30)}</Heading> : ""}
             </HStack>
             {route.name === 'home' ? <Input leftElement={<Icon as={Feather} name="search" size={5} ml={2} />} width={'90%'} borderRadius={20} type='text' variant={'filled'} placeholder="Search..." onChangeText={(text) => {
                 handleSearch(text)
