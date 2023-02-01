@@ -2,6 +2,12 @@
   "name": "jozu",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
+  "contributors": [{
+    "email": "rizkyfauziilmi@gmail.com",
+    "name": "Rizky Fauzi Ilmi",
+    "url": "https://github.com/RizkyFauziIlmi"
+  }],
+  "description": "Manga app that builds with react native",
   "scripts": {
     "start": "expo start --clear",
     "start:npx": "APP_ENV=production&& npx expo start --clear",
@@ -27,5 +33,31 @@
     "react-native-svg": "13.4.0"
   },
   "devDependencies": {},
+  "keywords": [
+    "node",
+    "react",
+    "react-native",
+    "native-base",
+    "npm",
+    "yarn",
+    "mobile",
+    "manga",
+    "app"
+  ],
+  "author": {
+    "email": "rizkyfauziilmi@gmail.com",
+    "name": "Rizky Fauzi Ilmi",
+    "url": "https://github.com/RizkyFauziIlmi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RizkyFauziIlmi/React-Native-Manga-App.git"
+  },
+  "homepage": "https://github.com/RizkyFauziIlmi/React-Native-Manga-App#readme",
+  "license": "MIT",
+  "bugs": {
+    "email": "rizkyfauziilmi@gmail.com",
+    "url": "https://github.com/RizkyFauziIlmi/React-Native-Manga-App/issues"
+  },
   "private": true
 }
