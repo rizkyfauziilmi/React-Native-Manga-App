@@ -4,6 +4,8 @@
 
 ***Author: [@rizkyfauziilmi](https://github.com/RizkyFauziIlmi)***
 
+This is a React Native application for manga reading. The repository provides a user-friendly interface for manga enthusiasts to easily browse and read their favorite manga series. The app features a sleek design, fast navigation, and a smooth reading experience optimized for mobile devices. With this application, users can keep track of their reading progress, discover new manga, and stay up-to-date with the latest releases. The source code is open-source and contributions from the community are always welcome
+
 ## List of Contents
 - [Demo](https://github.com/RizkyFauziIlmi/React-Native-Manga-App/edit/master/README.md#demo)
 - [Installation](https://github.com/RizkyFauziIlmi/React-Native-Manga-App/edit/master/README.md#installation)
@@ -86,4 +88,4 @@ yarn run start
 
 **Client:** React-native, native-base
 
-**Server:** Node, Express, MongoDB [(see more about API)](https://github.com/RizkyFauziIlmi/Manga-API)
+**Server:** Node, Express, MongoDB [(see more about API)](https://github.com/RizkyFauziIlmi/Manga-API), Firebase
