@@ -1,4 +1,4 @@
-# Manga-react-native-app
+# React Native Manga App
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
