@@ -30,19 +30,23 @@ This is a React Native application for manga reading. The repository provides a 
 
 ### Using repository (for customize the app)
 
-* remote repo
+* clone repo
 
 ```bash
-  git remote https://github.com/RizkyFauziIlmi/React-Native-Manga-App.git
-  cd React-Native-Manga-App
+  git clone https://github.com/RizkyFauziIlmi/React-Native-Manga-App.git
+```
+```bash
+   cd React-Native-Manga-App
 ```
 
 * install dependencies
 
 ```bash
   npm install
-  // or
-  yarn install
+```
+or
+```bash
+   yarn install
 ```
 * create `.env` file (optional: `.env.local`, `.env.production`, `.env.production.local`, `.env.development`, `.env.development.local`)
 
@@ -79,9 +83,11 @@ const firebaseConfig = {
 * run the project by this command
 
 ```bash
-npm run start
-// or
-yarn run start
+   npm run start
+```
+or
+```bash
+   yarn run start
 ```
 
 ## Tech Stack
