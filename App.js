@@ -15,6 +15,7 @@ import Account from './screens/setting/Account';
 import HelpAndSupport from './screens/setting/HelpAndSupport';
 import Favorite from './screens/user/Favorite';
 import History from './screens/user/History';
+import AdvanceSearch from './screens/contents/AdvanceSeach';
 
 const Stack = createNativeStackNavigator();
 
@@ -166,6 +167,14 @@ function App() {
           <Stack.Screen
             name='helpAndSupport'
             component={HelpAndSupport}
+            options={{
+              animation: 'slide_from_right',
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            name='advanceSearch'
+            component={AdvanceSearch}
             options={{
               animation: 'slide_from_right',
               headerShown: false

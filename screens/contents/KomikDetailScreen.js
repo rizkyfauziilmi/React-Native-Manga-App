@@ -6,6 +6,7 @@ import TopBar from '../../components/TopBar'
 import { auth, db } from '../../firebase/firebaseConfig'
 import { updateDoc, doc, arrayUnion, serverTimestamp, Timestamp, addDoc, arrayRemove } from 'firebase/firestore'
 import { useDocument } from 'react-firebase-hooks/firestore'
+import { getSinopsis } from '../../utils/stringModify'
 
 const KomikDetailScreen = ({ route, navigation }) => {
   const { endpoint, title } = route.params
@@ -84,7 +85,7 @@ const KomikDetailScreen = ({ route, navigation }) => {
               <HStack paddingY={5} justifyContent={'space-between'} alignItems={'center'}>
                 <Heading size={'sm'}>Synopsis</Heading>
               </HStack>
-              <Text noOfLines={0}>{komikDetail.sinopsis.trim()}</Text>
+              <Text noOfLines={0}>{getSinopsis(komikDetail.sinopsis.trim(), komikDetail)}</Text>
             </VStack>
             <ScrollView horizontal>
               <HStack space={3} p={5}>

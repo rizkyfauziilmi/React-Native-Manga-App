@@ -2,7 +2,7 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { Heading, HStack, IconButton, ChevronLeftIcon, VStack, Input, Icon, Image, Text, ScrollView, Pressable } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { auth } from '../firebase/firebaseConfig'
-import shortenSentence from '../utils/shortenSentence'
+import { getSinopsis, shortenSentence } from '../utils/stringModify'
 import { Feather } from '@expo/vector-icons'
 
 const TopBar = ({ headingTitle = "JOZU" }) => {
@@ -70,7 +70,7 @@ const TopBar = ({ headingTitle = "JOZU" }) => {
                                     <VStack>
                                         <Heading size={'xs'}>{shortenSentence(value.title, 30)}</Heading>
                                         <Text fontSize={'xs'} opacity={0.5} fontWeight={'bold'}>⭐ {value.score} / 10</Text>
-                                        <Text fontSize={'xs'} opacity={0.5} width={150} noOfLines={3}>{value?.sinopsis.replace("Manga", "").replace("Manhwa", "").replace("Manhua", "").replace(` ${value.title} yang dibuat oleh komikus bernama `, "").replace(`${value.info.filter(item => item.hasOwnProperty('Pengarang')).map(item => item.Pengarang)} ini bercerita tentang `, "")}</Text>
+                                        <Text fontSize={'xs'} opacity={0.5} width={150} noOfLines={3}>{getSinopsis(value?.sinopsis, value)}</Text>
                                     </VStack>
                                 </HStack>
                             </Pressable>
