@@ -24,7 +24,7 @@ This is a React Native application for manga reading. The repository provides a 
 
 ### Install the APK (for using and testing only)
 
-* download apk from this [Release Version](https://github.com/RizkyFauziIlmi/React-Native-Manga-App/releases/tag/v3.3.3). (Jozu v3.3.3)
+* download apk from this [Release Version](https://github.com/RizkyFauziIlmi/React-Native-Manga-App/releases/tag/v3.4.4). (Jozu v3.4.4)
 
 * after that install in your device
 
