@@ -16,10 +16,12 @@ import HelpAndSupport from './screens/setting/HelpAndSupport';
 import Favorite from './screens/user/Favorite';
 import History from './screens/user/History';
 import AdvanceSearch from './screens/contents/AdvanceSeach';
+import { StatusBar } from 'expo-status-bar'
 
 const Stack = createNativeStackNavigator();
 
 function App() {
+
   const theme = extendTheme({
     components: {
       Heading: {
@@ -48,7 +50,8 @@ function App() {
       },
     },
     config: {
-      initialColorMode: "dark",
+      useSystemColorMode: false,
+      initialColorMode: 'dark',
     },
   });
 
@@ -69,6 +72,7 @@ function App() {
 
   return (
     <NativeBaseProvider theme={theme}>
+      <StatusBar animated translucent style='light' />
       <NavigationContainer>
         <Stack.Navigator initialRouteName='home'>
           {user ?

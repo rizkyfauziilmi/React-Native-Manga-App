@@ -1,4 +1,4 @@
-import { Text, Input, VStack, Button, Icon, HStack, Flex, Image, ScrollView, Heading, Badge, Skeleton, PresenceTransition, Radio, Checkbox, useColorMode, Slider } from "native-base";
+import { Text, Input, VStack, Button, Icon, HStack, Flex, Image, ScrollView, Heading, Badge, Skeleton, PresenceTransition, Radio, Checkbox, useColorMode, Slider, Divider } from "native-base";
 import { useState } from "react";
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { getSinopsis } from "../../utils/stringModify";
@@ -15,8 +15,15 @@ const AdvanceSearch = ({ route, navigation }) => {
     const [alphabetOrder, setAlphabetOrder] = useState("az")
     const [limit, setLimit] = useState(undefined)
     const { colorMode } = useColorMode()
-    const listGenre = ["Romance", "Drama", "Action", "Adventure", "Comedy", "Demons", "Ecchi", "Fantasy", "Game", "Harem", "Historical", "Horror", "Josei", "Magic", "Martial Arts", "Mecha", "Military", "Music", "Mystery", "Psychological", "Parody", "Police", "Samurai", "School", "Sci-Fi", "Seinen", "Shoujo", "Shoujo Ai", "Shounen", "Slice of Life", "Sports", "Space", "Super Power", "Supernatural", "Thiller", "Vampire"]
+    const listGenre = [
+        { section: "Genre", content: ["Action", "Adventure", "Boys' Love", "Comedy", "Crime", "Drama", "Fantasy", "Girls' Love", "Harem", "Historical", "Horror", "Isekai", "Magical Girls", "Mecha", "Medical", "Music", "Mystery", "Philosophical", "Psychological", "Romance", "Sci-Fi", "Shoujo Ai", "Shounen Ai", "Slice of Life", "Sports", "Superhero", "Thriller", "Tragedy", "Wuxia", "Yuri"] },
+        { section: "Demografis", content: ["Josei", "Seinen", "Shoujo", "Shounen"] },
+        { section: "Konten", content: ["Ecchi", "Gore", "Sexual Violence", "Smut"] },
+        { section: "Tema", content: ["Aliens", "Animals", "Cooking", "Crossdressing", "Delinquents", "Demons", "Ecchi", "Genderswap", "Ghost", "Gore", "Gyaru", "Harem", "Incest", "Loli", "Mafia", "Magic", "Martial Arts", "Military", "Monster Girls", "Monsters", "Music", "Ninja", "Office Workers", "Police", "Post-Apocalyptic", "Reincarnation", "Reverse Harem", "Samurai", "School Life", "Shota", "Smut", "Supernatural", "Survival", "Time travel", "Traditional Games", "Vampires", "Video Games", "Villainess", "Virtual Reality", "Zombies"] }
+    ]
     const url = input === "" && type === "All" && groupGenres.length === 0 && sort === "None" && limit === undefined ? `https://komikindo-api.vercel.app/komik-detail` : `https://komikindo-api.vercel.app/komik-detail?${input === "" ? "" : `&q=${input}`}${type === "All" ? "" : `&type=${type}`}${groupGenres.length === 0 ? "" : `&genre=${groupGenres.toString()}`}${sort === "score" ? `&sort=${sort}` : ""}${sort === "alphabet" ? `&alphabet=${alphabetOrder}` : ""}${limit !== undefined ? `&limit=${limit}` : ""}`
+
+    console.log(groupGenres)
 
     const searchHandler = async () => {
         setFirst(false)
@@ -74,9 +81,19 @@ const AdvanceSearch = ({ route, navigation }) => {
                                 <HStack space={2} flexWrap={'wrap'} alignItems={'center'}>
                                     {listGenre.map((genre) => {
                                         return (
-                                            <Checkbox colorScheme="orange" key={genre} size="sm" value={genre}>
-                                                {genre}
-                                            </Checkbox>
+                                            <>
+                                                <Text>
+                                                    {genre.section}
+                                                </Text>
+                                                <Divider />
+                                                {genre.content.map((genreItem) => {
+                                                    return(
+                                                        <Checkbox colorScheme="orange" key={genreItem} size="sm" value={genreItem.toLowerCase().replace(/ /g, '-')}>
+                                                            {genreItem}
+                                                        </Checkbox>
+                                                    )
+                                                })}
+                                            </>
                                         )
                                     })}
                                 </HStack>
@@ -123,12 +140,12 @@ const AdvanceSearch = ({ route, navigation }) => {
                                 <VStack bgColor={'coolGray.900'} key={data._id} space={3} p={2} borderRadius="md" alignItems={'flex-start'}>
                                     <Image source={{
                                         uri: data.thumb
-                                    }} alt={data.title} position={'relative'} borderRadius={'md'} size={'2xl'} resizeMode="stretch" />
+                                    }} alt={data.title} alignSelf={'center'} position={'relative'} borderRadius={'md'} size={'2xl'} resizeMode="stretch" />
                                     {
-                                        data.info.filter((item) => item['Jenis Komik'])[0]['Jenis Komik'].trim() === "Manga" ? <Image top={3} right={5} position={'absolute'} source={require('../../assets/japan.png')} alt={'manga'} size={6} /> :
-                                            data.info.filter((item) => item['Jenis Komik'])[0]['Jenis Komik'].trim() === "Manhwa" ? <Image top={3} right={5} position={'absolute'} source={require('../../assets/korea.png')} alt={'manhwa'} size={6} /> :
-                                                data.info.filter((item) => item['Jenis Komik'])[0]['Jenis Komik'].trim() === "Manhua" ? <Image top={3} right={5} position={'absolute'} source={require('../../assets/china.png')} alt={'manhwa'} size={6} /> :
-                                                    data.info.filter((item) => item['Jenis Komik'])[0]['Jenis Komik'].trim() === 'hot' ? <Image top={3} right={5} position={'absolute'} source={require('../../assets/hot.png')} alt={'manga'} size={6} /> :
+                                        data.info.filter((item) => item['Jenis Komik'])[0]['Jenis Komik'].trim() === "Manga" ? <Image top={5} right={10} position={'absolute'} source={require('../../assets/japan.png')} alt={'manga'} size={6} /> :
+                                            data.info.filter((item) => item['Jenis Komik'])[0]['Jenis Komik'].trim() === "Manhwa" ? <Image top={5} right={10} position={'absolute'} source={require('../../assets/korea.png')} alt={'manhwa'} size={6} /> :
+                                                data.info.filter((item) => item['Jenis Komik'])[0]['Jenis Komik'].trim() === "Manhua" ? <Image top={5} right={10} position={'absolute'} source={require('../../assets/china.png')} alt={'manhwa'} size={6} /> :
+                                                    data.info.filter((item) => item['Jenis Komik'])[0]['Jenis Komik'].trim() === 'hot' ? <Image top={5} right={10} position={'absolute'} source={require('../../assets/hot.png')} alt={'manga'} size={6} /> :
                                                         <Text>{typeof data.info.filter((item) => item['Jenis Komik'])[0]['Jenis Komik'].trim()}</Text>
                                     }
                                     <Heading textAlign={'center'} size={'sm'}>{`${data.title} | ${data.info[0].Status.trim()}`}</Heading>

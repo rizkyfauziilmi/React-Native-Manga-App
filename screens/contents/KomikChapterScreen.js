@@ -1,12 +1,13 @@
 import { useNavigation } from "@react-navigation/native"
-import { HStack, IconButton, Image, ScrollView, VStack, Button, Text } from "native-base"
+import { HStack, IconButton, Image, ScrollView, VStack, Button } from "native-base"
 import { useEffect, useState } from "react"
 import { Fontisto, MaterialIcons } from '@expo/vector-icons'
 import Loading from "../../components/Loading"
 import TopBar from "../../components/TopBar"
-import { arrayUnion, updateDoc, doc, serverTimestamp, Timestamp } from "firebase/firestore"
+import { arrayUnion, updateDoc, doc, Timestamp } from "firebase/firestore"
 import { auth, db } from "../../firebase/firebaseConfig"
 import { useDocument } from "react-firebase-hooks/firestore"
+import { setStatusBarHidden } from 'expo-status-bar'
 
 const KomikChapterSceen = ({ route }) => {
     const navigation = useNavigation()
@@ -39,16 +40,26 @@ const KomikChapterSceen = ({ route }) => {
             setKomikChapter(data[0])
 
         }
-        
+
         const getTotalChapter = async () => {
             const responseTotalChapter = await fetch(`https://komikindo-api.vercel.app/komik-detail/${endpoint.substring(0, endpoint.indexOf("-chapter-"))}`)
             const dataTotalChapter = await responseTotalChapter.json()
-    
+
             setTotalChapter(dataTotalChapter[0]?.chapter_list)
         }
 
         getKomikchapter()
         getTotalChapter()
+
+        navigation.addListener('beforeRemove', (e) => {
+
+            e.preventDefault()
+
+            setStatusBarHidden(false, 'slide')
+            setFullScreen(false)
+            navigation.dispatch(e.data?.action)
+        })
+
     }, [])
 
     if (komikChapter && !loading && value && totalChapter) {
@@ -113,6 +124,7 @@ const KomikChapterSceen = ({ route }) => {
                     }} />
                     <IconButton size={10} opacity={isOpacity ? 1 : 0.5} colorScheme={'amber'} _icon={{ as: MaterialIcons, name: !fullScreen ? "fullscreen" : "fullscreen-exit" }} variant={'solid'} onPress={() => {
                         setFullScreen(!fullScreen)
+                        setStatusBarHidden(!fullScreen, 'slide')
                         setIsOpacity(true)
                         if (!change) {
                             setChange(true)

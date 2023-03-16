@@ -4500,6 +4500,11 @@ expo-modules-core@0.13.4:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
 
+expo-status-bar@~1.4.2:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.4.4.tgz#6874ccfda5a270d66f123a9f220735a76692d114"
+  integrity sha512-5DV0hIEWgatSC3UgQuAZBoQeaS9CqeWRZ3vzBR9R/+IUD87Adbi4FGhU10nymRqFXOizGsureButGZIXPs7zEA==
+
 expo@47.0.0:
   version "47.0.0"
   resolved "https://registry.yarnpkg.com/expo/-/expo-47.0.0.tgz#c67a812b9415735df83443271fb54b1d700189b6"
