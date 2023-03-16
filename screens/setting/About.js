@@ -2,6 +2,7 @@ import { Divider, Heading, HStack, Icon, List, ScrollView, Text, VStack } from '
 import React from 'react'
 import { MaterialCommunityIcons, MaterialIcons, AntDesign } from '@expo/vector-icons'
 import BottomBar from '../../components/BottomBar'
+import * as Application from 'expo-application';
 
 const About = ({ navigation, route }) => {
     return (
@@ -11,12 +12,12 @@ const About = ({ navigation, route }) => {
                     <Heading textAlign={'center'} pb={2} pt={5}>About</Heading>
                     <HStack alignItems={'center'} space={2}>
                         <Icon as={MaterialCommunityIcons} name="application-brackets-outline" size={5} />
-                        <Text fontWeight={'medium'}>App Name: Jozu</Text>
+                        <Text fontWeight={'medium'}>App Name: {Application.applicationName}</Text>
                     </HStack>
                     <Divider />
                     <HStack alignItems={'center'} space={2}>
                         <Icon as={MaterialIcons} name="update" />
-                        <Text fontWeight={'medium'}>Version: 3.4.4</Text>
+                        <Text fontWeight={'medium'}>Version: 3.5.5</Text>
                     </HStack>
                     <Divider />
                     <HStack alignItems={'center'} space={2}>
@@ -38,11 +39,10 @@ const About = ({ navigation, route }) => {
                     </VStack>
                     <Divider />
                     <VStack>
-                        <Heading pb={1} size={'md'} textAlign={'center'}>update version 3.4.4</Heading>
+                        <Heading pb={1} size={'md'} textAlign={'center'}>update version 3.5.5</Heading>
                         <List p={3} mb={5}>
-                            <Text fontWeight={'medium'}>• Advance Search Feature</Text>
-                            <Text fontWeight={'medium'}>• UI Improvement</Text>
-                            <Text fontWeight={'medium'}>• Bug Fixed</Text>
+                            <Text fontWeight={'medium'}>• StatusBar Hidden while Fullscreen Mode</Text>
+                            <Text fontWeight={'medium'}>• More Filter Genres Option</Text>
                             <Text fontWeight={'medium'} textAlign={'center'} pt={5}>-Always make sure to update your app to the latest version to enjoy the latest features and improvements we've made.-</Text>
                         </List>
                     </VStack>

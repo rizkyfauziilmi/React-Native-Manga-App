@@ -8,7 +8,9 @@ import { useState } from "react"
 const Setting = ({ navigation, route }) => {
   const [signOut, loading, error] = useSignOut(auth)
   const [showModal, setShowModal] = useState(false);
-  const { setColorMode } = useColorMode()
+  const { setColorMode, colorMode } = useColorMode()
+
+  console.log(colorMode)
 
   return (
     <>
